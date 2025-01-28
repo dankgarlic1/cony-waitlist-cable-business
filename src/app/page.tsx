@@ -13,17 +13,17 @@ import {
   Linkedin,
 } from "lucide-react";
 import dynamic from "next/dynamic";
-import { Player as LottiePlayer } from "@lottiefiles/react-lottie-player";
 
 import confettiAnimation from "@/data/confetti.json";
 import Image from "next/image";
 import Link from "next/link";
 
-// Dynamically import the Lottie Player to avoid SSR issues
-const Player = dynamic(
+// Add this dynamic import
+const LottiePlayer = dynamic(
   () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
   {
     ssr: false,
+    loading: () => <div className="h-full w-full" />, // Optional loading placeholder
   }
 );
 
@@ -425,8 +425,8 @@ export default function Home() {
                 </button>
               </form>
               <p className="text-sm text-gray-500 mt-6 text-center">
-                By joining, you'll be the first to know about our launch and
-                exclusive offers.
+                By joining, you&apos;ll be the first to know about our launch
+                and exclusive offers.
               </p>
             </div>
           </div>
