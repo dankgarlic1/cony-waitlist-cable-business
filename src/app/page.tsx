@@ -1,0 +1,475 @@
+import React, { useState } from "react";
+import {
+  Cable,
+  Check,
+  Usb,
+  Smartphone,
+  Laptop,
+  ArrowRight,
+  Zap,
+  Shield,
+  Award,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Mail,
+} from "lucide-react";
+
+export default function Home() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    setFormData({ firstName: "", lastName: "", email: "" });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Header */}
+      <header className="fixed w-full top-0 bg-white/80 backdrop-blur-md shadow-sm z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="relative">
+                <div className="absolute inset-0 bg-blue-500 rounded-full blur-sm"></div>
+                <Cable className="h-8 w-8 text-blue-600 relative" />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                Cony
+              </span>
+            </div>
+            <nav className="hidden md:flex space-x-8">
+              <a
+                href="#features"
+                className="text-gray-600 hover:text-blue-600 transition"
+              >
+                Features
+              </a>
+              <a
+                href="#products"
+                className="text-gray-600 hover:text-blue-600 transition"
+              >
+                Products
+              </a>
+              <a
+                href="#signup"
+                className="text-gray-600 hover:text-blue-600 transition"
+              >
+                Join Waitlist
+              </a>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative z-10">
+              <div className="absolute -left-20 -top-20 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+              <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+              <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                Power Your World with
+                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  {" "}
+                  Premium Cables
+                </span>
+              </h1>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Experience the next generation of device connectivity. Our
+                premium cables are engineered for performance, durability, and
+                style.
+              </p>
+              <div className="flex flex-wrap gap-4 mb-12">
+                <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span className="text-gray-700">Fast Charging</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span className="text-gray-700">Universal Compatibility</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
+                  <Check className="h-5 w-5 text-green-500" />
+                  <span className="text-gray-700">Lifetime Warranty</span>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <img
+                src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=800&q=80"
+                alt="Premium Cables"
+                className="rounded-2xl shadow-2xl transform hover:scale-105 transition duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 rounded-2xl"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section
+        id="features"
+        className="py-20 bg-gradient-to-b from-white to-gray-50"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Why Choose Cony?
+            </h2>
+            <p className="text-xl text-gray-600">
+              Experience the perfect blend of technology and design
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition group">
+              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition">
+                <Zap className="h-8 w-8 text-blue-600 group-hover:text-white transition" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Lightning Fast
+              </h3>
+              <p className="text-gray-600">
+                Experience rapid charging speeds that keep your devices powered
+                up when you need them most.
+              </p>
+            </div>
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition group">
+              <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 transition">
+                <Shield className="h-8 w-8 text-purple-600 group-hover:text-white transition" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Built to Last
+              </h3>
+              <p className="text-gray-600">
+                Premium materials and rigorous testing ensure our cables
+                withstand daily wear and tear.
+              </p>
+            </div>
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition group">
+              <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition">
+                <Award className="h-8 w-8 text-indigo-600 group-hover:text-white transition" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Certified Quality
+              </h3>
+              <p className="text-gray-600">
+                All our products meet international safety and performance
+                standards.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products Section */}
+      <section id="products" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Our Product Line
+            </h2>
+            <p className="text-xl text-gray-600">
+              Discover our range of premium connectivity solutions
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="group relative overflow-hidden rounded-2xl">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
+              <img
+                src="https://images.unsplash.com/photo-1662947995689-ec5165848bac?auto=format&fit=crop&w=800&q=80"
+                alt="USB-C Cable"
+                className="w-full h-80 object-cover transform group-hover:scale-110 transition duration-500"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  USB-C to USB-C
+                </h3>
+                <p className="text-gray-200">
+                  Next-gen connectivity for modern devices
+                </p>
+              </div>
+            </div>
+            <div className="group relative overflow-hidden rounded-2xl">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
+              <img
+                src="https://images.unsplash.com/photo-1659921802772-15a0bb1b35d4?auto=format&fit=crop&w=800&q=80"
+                alt="Lightning Cable"
+                className="w-full h-80 object-cover transform group-hover:scale-110 transition duration-500"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  Lightning to USB-C
+                </h3>
+                <p className="text-gray-200">Perfect for Apple devices</p>
+              </div>
+            </div>
+            <div className="group relative overflow-hidden rounded-2xl">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
+              <img
+                src="https://images.unsplash.com/photo-1625961332771-3f40b0e2bdf9?auto=format&fit=crop&w=800&q=80"
+                alt="Universal Adapter"
+                className="w-full h-80 object-cover transform group-hover:scale-110 transition duration-500"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  Universal Adapters
+                </h3>
+                <p className="text-gray-200">
+                  One solution for all your devices
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sign Up Section */}
+      <section
+        id="signup"
+        className="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  Join the Waiting List
+                </h2>
+                <p className="text-gray-600">
+                  Be the first to experience our revolutionary cables
+                </p>
+              </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label
+                      htmlFor="firstName"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-50"
+                      placeholder="John"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="lastName"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-50"
+                      placeholder="Doe"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-50"
+                    placeholder="john@example.com"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white font-semibold py-4 px-6 rounded-lg transition duration-200 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
+                >
+                  <span>Join Waiting List</span>
+                  <ArrowRight className="h-5 w-5" />
+                </button>
+              </form>
+              <p className="text-sm text-gray-500 mt-6 text-center">
+                By joining, you'll be the first to know about our launch and
+                exclusive offers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="col-span-2 md:col-span-1">
+              <div className="flex items-center space-x-2 mb-6">
+                <Cable className="h-8 w-8 text-blue-400" />
+                <span className="text-2xl font-bold text-white">Cony</span>
+              </div>
+              <p className="text-gray-400">
+                Revolutionizing device connectivity with premium quality cables
+                and adapters.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Products</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition"
+                  >
+                    USB-C Cables
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition"
+                  >
+                    Lightning Cables
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition"
+                  >
+                    Adapters
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition"
+                  >
+                    Accessories
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Company</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition"
+                  >
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition"
+                  >
+                    Careers
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition"
+                  >
+                    Press
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white transition"
+                  >
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Connect</h3>
+              <div className="flex space-x-4">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  <Facebook className="h-6 w-6" />
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  <Twitter className="h-6 w-6" />
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  <Instagram className="h-6 w-6" />
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  <Linkedin className="h-6 w-6" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-12 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <p className="text-gray-400 text-sm">
+                © 2024 Cony. All rights reserved.
+              </p>
+              <div className="flex space-x-6 mt-4 md:mt-0">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white text-sm transition"
+                >
+                  Privacy Policy
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white text-sm transition"
+                >
+                  Terms of Service
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
