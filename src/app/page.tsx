@@ -1,10 +1,8 @@
+"use client";
 import React, { useState } from "react";
 import {
   Cable,
   Check,
-  Usb,
-  Smartphone,
-  Laptop,
   ArrowRight,
   Zap,
   Shield,
@@ -13,10 +11,25 @@ import {
   Twitter,
   Instagram,
   Linkedin,
-  Mail,
 } from "lucide-react";
+import dynamic from "next/dynamic";
+import { Player as LottiePlayer } from "@lottiefiles/react-lottie-player";
+
+import confettiAnimation from "@/data/confetti.json";
+import Image from "next/image";
+import Link from "next/link";
+
+// Dynamically import the Lottie Player to avoid SSR issues
+const Player = dynamic(
+  () => import("@lottiefiles/react-lottie-player").then((mod) => mod.Player),
+  {
+    ssr: false,
+  }
+);
 
 export default function Home() {
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -27,6 +40,8 @@ export default function Home() {
     e.preventDefault();
     console.log("Form submitted:", formData);
     setFormData({ firstName: "", lastName: "", email: "" });
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 2500); // Hide confetti after animation
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,53 +51,124 @@ export default function Home() {
     });
   };
 
+  const handleNavClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Header */}
-      <header className="fixed w-full top-0 bg-white/80 backdrop-blur-md shadow-sm z-50">
+      {/* Global confetti overlay */}
+      {showConfetti && (
+        <div className="fixed inset-0 z-50 pointer-events-none">
+          <LottiePlayer
+            autoplay
+            loop={false}
+            src={confettiAnimation}
+            style={{ height: "100%", width: "100%" }}
+          />
+        </div>
+      )}
+
+      {/* Header - Add mobile menu */}
+      <header className="fixed w-full top-0 bg-white/80 backdrop-blur-md shadow-sm z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <Link
+              href="#"
+              className="flex items-center space-x-2"
+              onClick={handleNavClick}
+            >
               <div className="relative">
-                <div className="absolute inset-0 bg-blue-500 rounded-full blur-sm"></div>
-                <Cable className="h-8 w-8 text-blue-600 relative" />
+                <Cable className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 relative" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
                 Cony
               </span>
-            </div>
+            </Link>
+
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden text-gray-600 hover:text-blue-600 transition"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+
             <nav className="hidden md:flex space-x-8">
-              <a
+              <Link
                 href="#features"
                 className="text-gray-600 hover:text-blue-600 transition"
+                onClick={handleNavClick}
               >
                 Features
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#products"
                 className="text-gray-600 hover:text-blue-600 transition"
+                onClick={handleNavClick}
               >
                 Products
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#signup"
                 className="text-gray-600 hover:text-blue-600 transition"
+                onClick={handleNavClick}
               >
                 Join Waitlist
-              </a>
+              </Link>
             </nav>
           </div>
+
+          {/* Mobile menu */}
+          {isMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg p-4">
+              <nav className="flex flex-col space-y-4">
+                <Link
+                  href="#features"
+                  className="text-gray-600 hover:text-blue-600 transition"
+                  onClick={handleNavClick}
+                >
+                  Features
+                </Link>
+                <Link
+                  href="#products"
+                  className="text-gray-600 hover:text-blue-600 transition"
+                  onClick={handleNavClick}
+                >
+                  Products
+                </Link>
+                <Link
+                  href="#signup"
+                  className="text-gray-600 hover:text-blue-600 transition"
+                  onClick={handleNavClick}
+                >
+                  Join Waitlist
+                </Link>
+              </nav>
+            </div>
+          )}
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
+      {/* Hero Section - Update responsive classes */}
+      <section className="pt-24 sm:pt-32 pb-16 sm:pb-20 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="relative z-10 text-center lg:text-left">
               <div className="absolute -left-20 -top-20 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
               <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-              <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
                 Power Your World with
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {" "}
@@ -110,9 +196,11 @@ export default function Home() {
               </div>
             </div>
             <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=800&q=80"
+              <Image
+                src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6"
                 alt="Premium Cables"
+                width={800}
+                height={600}
                 className="rounded-2xl shadow-2xl transform hover:scale-105 transition duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 rounded-2xl"></div>
@@ -124,10 +212,10 @@ export default function Home() {
       {/* Features Section */}
       <section
         id="features"
-        className="py-20 bg-gradient-to-b from-white to-gray-50"
+        className="py-16 sm:py-20 bg-gradient-to-b from-white to-gray-50"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Why Choose Cony?
             </h2>
@@ -135,7 +223,7 @@ export default function Home() {
               Experience the perfect blend of technology and design
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition group">
               <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition">
                 <Zap className="h-8 w-8 text-blue-600 group-hover:text-white transition" />
@@ -177,9 +265,9 @@ export default function Home() {
       </section>
 
       {/* Products Section */}
-      <section id="products" className="py-20 bg-white">
+      <section id="products" className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Our Product Line
             </h2>
@@ -187,12 +275,14 @@ export default function Home() {
               Discover our range of premium connectivity solutions
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             <div className="group relative overflow-hidden rounded-2xl">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
-              <img
-                src="https://images.unsplash.com/photo-1662947995689-ec5165848bac?auto=format&fit=crop&w=800&q=80"
+              <Image
+                src="https://images.unsplash.com/photo-1619459072761-496c0812331b"
                 alt="USB-C Cable"
+                width={800}
+                height={600}
                 className="w-full h-80 object-cover transform group-hover:scale-110 transition duration-500"
               />
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
@@ -206,9 +296,11 @@ export default function Home() {
             </div>
             <div className="group relative overflow-hidden rounded-2xl">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
-              <img
-                src="https://images.unsplash.com/photo-1659921802772-15a0bb1b35d4?auto=format&fit=crop&w=800&q=80"
+              <Image
+                src="https://images.unsplash.com/photo-1524226108234-3cccbbbfa86d"
                 alt="Lightning Cable"
+                width={800}
+                height={600}
                 className="w-full h-80 object-cover transform group-hover:scale-110 transition duration-500"
               />
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
@@ -220,9 +312,11 @@ export default function Home() {
             </div>
             <div className="group relative overflow-hidden rounded-2xl">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10"></div>
-              <img
-                src="https://images.unsplash.com/photo-1625961332771-3f40b0e2bdf9?auto=format&fit=crop&w=800&q=80"
+              <Image
+                src="https://images.unsplash.com/photo-1616578781650-cd818fa41e57"
                 alt="Universal Adapter"
+                width={800}
+                height={600}
                 className="w-full h-80 object-cover transform group-hover:scale-110 transition duration-500"
               />
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
@@ -238,15 +332,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Sign Up Section */}
+      {/* Sign Up Section with local confetti */}
       <section
         id="signup"
         className="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden"
       >
-        <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto">
-            <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+            <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 relative">
+              {/* Local confetti overlay */}
+              {showConfetti && (
+                <div className="absolute inset-0 z-50 pointer-events-none">
+                  <LottiePlayer
+                    autoplay
+                    loop={false}
+                    src={confettiAnimation}
+                    style={{ height: "100%", width: "100%" }}
+                  />
+                </div>
+              )}
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-4">
                   Join the Waiting List
@@ -329,10 +433,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer - Update responsive layout */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="col-span-2 md:col-span-1">
               <div className="flex items-center space-x-2 mb-6">
                 <Cable className="h-8 w-8 text-blue-400" />
@@ -347,36 +451,36 @@ export default function Home() {
               <h3 className="text-lg font-semibold mb-4">Products</h3>
               <ul className="space-y-2">
                 <li>
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-400 hover:text-white transition"
                   >
                     USB-C Cables
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-400 hover:text-white transition"
                   >
                     Lightning Cables
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-400 hover:text-white transition"
                   >
                     Adapters
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-400 hover:text-white transition"
                   >
                     Accessories
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -384,87 +488,87 @@ export default function Home() {
               <h3 className="text-lg font-semibold mb-4">Company</h3>
               <ul className="space-y-2">
                 <li>
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-400 hover:text-white transition"
                   >
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-400 hover:text-white transition"
                   >
                     Careers
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-400 hover:text-white transition"
                   >
                     Press
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-400 hover:text-white transition"
                   >
                     Contact
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-4">Connect</h3>
               <div className="flex space-x-4">
-                <a
+                <Link
                   href="#"
                   className="text-gray-400 hover:text-white transition"
                 >
                   <Facebook className="h-6 w-6" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="text-gray-400 hover:text-white transition"
                 >
                   <Twitter className="h-6 w-6" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="text-gray-400 hover:text-white transition"
                 >
                   <Instagram className="h-6 w-6" />
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="text-gray-400 hover:text-white transition"
                 >
                   <Linkedin className="h-6 w-6" />
-                </a>
+                </Link>
               </div>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
               <p className="text-gray-400 text-sm">
-                © 2024 Cony. All rights reserved.
+                © 2025 Cony. All rights reserved.
               </p>
-              <div className="flex space-x-6 mt-4 md:mt-0">
-                <a
+              <div className="flex space-x-6 mt-4 sm:mt-0">
+                <Link
                   href="#"
                   className="text-gray-400 hover:text-white text-sm transition"
                 >
                   Privacy Policy
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#"
                   className="text-gray-400 hover:text-white text-sm transition"
                 >
                   Terms of Service
-                </a>
+                </Link>
               </div>
             </div>
           </div>
